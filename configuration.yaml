@@ -1,0 +1,20 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+switch: !include switch.yaml
+sensor: !include sensor.yaml
+
+camera:
+  - platform: ffmpeg
+    name: nipsu
+    input: rtsp://nipsu.lan:8554/unicast
+
+
