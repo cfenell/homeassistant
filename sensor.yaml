@@ -1,6 +1,0 @@
-- platform: command_line
-  name: "Rumstemperatur"
-  command: "ssh pi@nipsu cat /sys/bus/w1/devices/28-0316a082c5ff/temperature"
-  unit_of_measurement: "C"
-  value_template: "{{ value | multiply(0.001) | round(1) }}"
-

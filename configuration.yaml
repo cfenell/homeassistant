@@ -1,4 +1,3 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -9,12 +8,52 @@ tts:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-switch: !include switch.yaml
-sensor: !include sensor.yaml
+
+sensor:
+  - platform: command_line
+    name: "Rumstemperatur"
+    command: "ssh pi@nipsu cat /sys/bus/w1/devices/28-0316a082c5ff/temperature"
+    unit_of_measurement: "C"
+    value_template: "{{ value | multiply(0.001) | round(1) }}"
+
+switch:
+  - platform: command_line
+    switches: 
+      kok1: 
+        command_on: "ssh pi@nipsu tdtool --dimlevel 255 --dim kok1"
+        command_off: "ssh pi@nipsu tdtool --off kok1"
+        friendly_name: "Kök stora fönstret"
+      kok2:
+        command_on: "ssh pi@nipsu tdtool --on kok2"
+        command_off: "ssh pi@nipsu tdtool --off kok2"
+        friendly_name: "Kök lilla fönstret"
+      sov1:
+        command_on: "ssh pi@nipsu tdtool --on sov1"
+        command_off: "ssh pi@nipsu tdtool --off sov1"
+        friendly_name: "Sovrum mot trädgård"
+      sov2:
+        command_on: "ssh pi@nipsu tdtool --on sov2"
+        command_off: "ssh pi@nipsu tdtool --off sov2"
+        friendly_name: "Sovrum mot Hermelinsgatan"
+      arb1:
+        command_on: "ssh pi@nipsu tdtool --on arb1"
+        command_off: "ssh pi@nipsu tdtool --off arb1"
+        friendly_name: "Arbetsrum fönster"
+      arb2:
+        command_on: "ssh pi@nipsu tdtool --on arb2"
+        command_off: "ssh pi@nipsu tdtool --off arb2"
+        friendly_name: "Ivarhyllan"
+      sal1:
+        command_on: "ssh pi@nipsu tdtool --on sal1"
+        command_off: "ssh pi@nipsu tdtool --off sal1"
+        friendly_name: "Sal fönster mot Hermelinsgatan"
+      sal2:
+        command_on: "ssh pi@nipsu tdtool --on sal2"
+        command_off: "ssh pi@nipsu tdtool --off sal2"
+        friendly_name: "Sal fönster mot Föraregatan och hylla"
 
 camera:
   - platform: ffmpeg
     name: nipsu
     input: rtsp://nipsu.lan:8554/unicast
-
 
